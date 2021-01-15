@@ -2,6 +2,7 @@
 
 namespace Payplug\PayplugWoocommerce\Admin;
 
+// Exit if accessed directly
 use Payplug\Payplug;
 use Payplug\Authentication;
 use Payplug\PayplugWoocommerce\Gateway\PayplugGateway;
@@ -105,15 +106,11 @@ class Ajax {
 			)
 		);
 	}
-
-	public function check_live_permissions() {
+    
+    public function check_live_permissions() {
 		$account = Authentication::getAccount(new Payplug($_POST['livekey']));
-		$permissions = $account['httpResponse']['permissions'];
-		wp_send_json_success(
-			array(
-				'can_use_oney' => $permissions[PayplugPermissions::USE_ONEY]
-			)
-		);
+        $permissions = $account['httpResponse']['permissions'];
+		wp_send_json_success($permissions);
 	}
 
 	/**
